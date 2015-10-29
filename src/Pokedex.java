@@ -2,7 +2,6 @@ import generated.NombreType;
 import generated.PokedexType;
 import generated.PokemonType;
 
-import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -72,7 +71,9 @@ public class Pokedex {
                 JAXBContext jaxbContext = JAXBContext.newInstance(PokemonType.class);
                 Unmarshaller unM = jaxbContext.createUnmarshaller();
                 PokedexType pt = (PokedexType)unM.unmarshal(filePokeDex);
-                pt.getPokedex().add()
+                pt.getPokemon().add(pokemon);
+
+
 
 
 
