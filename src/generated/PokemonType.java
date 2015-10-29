@@ -76,6 +76,8 @@ import javax.xml.bind.annotation.XmlType;
     "ataque2",
     "etapa"
 })
+
+
 public class PokemonType {
 
     @XmlElement(name = "Nombre", required = true)
