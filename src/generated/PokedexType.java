@@ -38,11 +38,11 @@ import javax.xml.bind.annotation.*;
 })
 
 @XmlRootElement(
-        name="pokemon")
+        name="Pokedex")
 
 
 
-public class PokedexType {
+public class PokedexType extends PokemonType{
 
     @XmlElement(name = "Pokemon")
     protected List<PokemonType> pokemon;

@@ -2,10 +2,7 @@ import generated.NombreType;
 import generated.PokedexType;
 import generated.PokemonType;
 
-import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 import java.io.File;
 import java.util.Scanner;
 
@@ -20,9 +17,11 @@ public class Pokedex {
 
         Scanner scn = new Scanner(System.in);
 
-        File filePokeDex = new File(ruta+"/Pokemons.xml");
+        File filePokeDex = new File(ruta+"/pokemons.xml");
 
-        Boolean implementar = true;
+        Boolean introducir = true;
+        int introOld;
+
 
         String nombre = "";
         String classe = "";
@@ -35,7 +34,7 @@ public class Pokedex {
         PokemonType pokemon;
 
 
-        while (implementar) {
+        while (introducir) {
             //Preguntamos por pantalla las caracteristicas del pokemon
             System.out.println("Indique nombre del pokemon: ");
             nombre = scn.next();
@@ -68,20 +67,55 @@ public class Pokedex {
             pokemon.setAtaque2(atq2);
             pokemon.setEtapa(etapa);
 
+
+
             try{
-                JAXBContext jaxbContext = JAXBContext.newInstance(PokemonType.class);
+                JAXBContext jaxbContext = JAXBContext.newInstance(PokedexType.class);
                 Unmarshaller unM = jaxbContext.createUnmarshaller();
-                PokedexType pt = (PokedexType)unM.unmarshal(filePokeDex);
-                pt.getPokedex().add()
 
+                PokedexType pdType = (PokedexType)unM.unmarshal(filePokeDex);
 
+                System.out.println("1");
+
+                pdType.getPokemon().add(pokemon);
+                System.out.println(pdType.getPokemon().size());
+
+                guardar(pdType);
 
             } catch (JAXBException e) {
                 e.printStackTrace();
             }
 
+            //Guardamos el pokemon en xml nuevo
+
+
 
         }
 
     }
+
+    /**
+     * Guardar pokemons en nuevo Archivo
+     * @param pd
+     */
+    public static void guardar (PokedexType pd){
+
+
+        File ficheroNew = new File (ruta+"/pokemons.xml");
+
+        try {
+            JAXBContext jc = JAXBContext.newInstance(PokedexType.class);
+            Marshaller marsh = jc.createMarshaller();
+            marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
+            marsh.marshal(pd, ficheroNew);
+            marsh.marshal(pd,System.out);
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 }
